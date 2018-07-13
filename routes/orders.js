@@ -3,22 +3,20 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const cors = require('./cors');
-const services = require('../models/services');
+const orders = require('../models/orders');
 
 
 
 
-const servicesRouter = express.Router();
+const ordersRouter = express.Router();
 
-servicesRouter.use(bodyParser.json());
+ordersRouter.use(bodyParser.json());
 
 
-
-servicesRouter.route('/')
+ordersRouter.route('/')
 .options(cors.cors, (req, res) => { res.sendStatus(200); })
     .get(cors.corsWithOptions,(req, res, next) => {
-        services.find({})
-        .populate('comments.author')
+        orders.find({})
             .then((Scholarships) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
@@ -29,23 +27,23 @@ servicesRouter.route('/')
 
     .post(cors.corsWithOptions,
          (req, res, next) => {
-            services.create(req.body)
-            .then((contact) => {
-                console.log('contact created: ', contact);
+            orders.create(req.body)
+            .then((orders) => {
+                console.log('orders created: ', orders);
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
-                res.json(contact);
+                res.json(orders);
             }, (err) => next(err))
             .catch((err) => next(err));
     })
 
     .put(cors.corsWithOptions, (req, res, next) => {
         res.statusCode = 403;
-        res.end('PUT operation not supported on /contact');
+        res.end('PUT operation not supported on /orders');
     })
 
     .delete(cors.corsWithOptions, (req, res, next) => {
-        services.remove({})
+        orders.remove({})
             .then((resp) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
@@ -56,4 +54,4 @@ servicesRouter.route('/')
 
 
 
-module.exports = servicesRouter;
+module.exports = ordersRouter;

@@ -6,8 +6,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
+var passport = require('passport');
 var config = require("./config")
-
+var authenticate = require('./authenticate');
 
 const url = config.mongoUrl;
 const connect = mongoose.connect(url, {
@@ -24,7 +25,9 @@ connect.then((db) => {
 var index = require('./routes/index');
 var users = require('./routes/users');
 var contact = require('./routes/contact');
-var services = require('./routes/services');
+var products = require('./routes/products');
+var users = require("./routes/users")
+var orders = require("./routes/orders")
 var app = express();
 
 // view engine setup
@@ -34,16 +37,22 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded( {limit: '50mb', extended: true}));
 app.use(cookieParser());
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
 
-app.use('/contact', contact);
-app.use('/services', services);
+app.use('/contacts', contact);
+app.use('/orders', orders);
+app.use('/products', products);
+app.use("/users" , users)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

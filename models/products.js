@@ -2,20 +2,24 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 
-const servicesSchema = new Schema({
+const productSchema = new Schema({
     name: {                    
         type: String,
         required: true,
     },
-    email : {
+    code : {
         type : String , 
         required : true 
     },
-    message : {
+    description : {
         type : String , 
         required : true
     },
     type:{
+        type : String,
+        required : true
+    },
+    image:{
         type : String,
         required : true
     }
@@ -24,6 +28,6 @@ const servicesSchema = new Schema({
 });
 
 
-var Services = mongoose.model('Services', servicesSchema);
+var Products = mongoose.model('Products', productSchema);
 
-module.exports = Services;
+module.exports = Products;
