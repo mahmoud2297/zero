@@ -59,7 +59,7 @@ productsRouter.route('/')
     .post(cors.corsWithOptions,(req, res, next) => {
             products.create(req.body)
             .then((contact) => {
-                console.log('contact created: ', contact);
+                console.log('product created: ', contact);
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
                 res.json(contact);
@@ -81,6 +81,51 @@ productsRouter.route('/')
             }, (err) => next(err))
             .catch((err) => next(err));
     });
+
+
+    productsRouter.route('/:scholarId')
+    .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
+        .get(cors.cors, (req, res, next) => {
+            products.findById(req.params.scholarId)
+            .populate('comments.author')
+                .then((scholarship) => {
+                    res.statusCode = 200;
+                    res.setHeader('Content-Type', 'application/json');
+                    res.json(scholarship);
+                }, (err) => next(err))
+                .catch((err) => next(err));
+        })
+    
+        .post(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+            res.statusCode = 403;
+            res.end('POST operation not supported on /Scholarships/'
+                + req.params.scholarId);
+        })
+    
+        .put(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+            products.findByIdAndUpdate(req.params.scholarId, {
+                $set: req.body
+            }, {
+                    new: true
+                })
+                .then((scholarship) => {
+                    console.log('scholarship updated: ', scholarship);
+                    res.statusCode = 200;
+                    res.setHeader('Content-Type', 'application/json');
+                    res.json(scholarship);
+                }, (err) => next(err))
+                .catch((err) => next(err));
+        })
+    
+        .delete( cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+            products.findByIdAndRemove(req.params.scholarId)
+                .then((resp) => {
+                    res.statusCode = 200;
+                    res.setHeader('Content-Type', 'application/json');
+                    res.json(resp);
+                }, (err) => next(err))
+                .catch((err) => next(err));
+        })
 
 
 

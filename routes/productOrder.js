@@ -3,20 +3,20 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
 const cors = require('./cors');
-const orders = require('../models/orders');
+const productOrder = require('../models/productOrder');
 
 
 
 
-const ordersRouter = express.Router();
+const productOrderRouter = express.Router();
 
-ordersRouter.use(bodyParser.json());
+productOrderRouter.use(bodyParser.json());
 
 
-ordersRouter.route('/')
+productOrderRouter.route('/')
 .options(cors.cors, (req, res) => { res.sendStatus(200); })
     .get(cors.corsWithOptions,(req, res, next) => {
-        orders.find({})
+        productOrder.find({})
             .then((Scholarships) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
@@ -27,7 +27,7 @@ ordersRouter.route('/')
 
     .post(cors.corsWithOptions,
          (req, res, next) => {
-            orders.create(req.body)
+            productOrder.create(req.body)
             .then((orders) => {
                 console.log('orders created: ', orders);
                 let transporter = nodemailer.createTransport({
@@ -67,7 +67,7 @@ ordersRouter.route('/')
     })
 
     .delete(cors.corsWithOptions, (req, res, next) => {
-        orders.remove({})
+        productOrder.remove({})
             .then((resp) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
@@ -78,4 +78,4 @@ ordersRouter.route('/')
 
 
 
-module.exports = ordersRouter;
+module.exports = productOrderRouter;

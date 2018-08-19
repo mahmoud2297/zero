@@ -11,12 +11,12 @@ var config = require('./config');
 
 exports.local = passport.use(new LocalStrategy(User.authenticate()));
 
-exports.localLogin =     passport.use('local-login', new LocalStrategy({
-    // by default, local strategy uses username and password, we will override with email
-    usernameField : 'email',
-    passwordField : 'password'
-},
-User.authenticate()));
+// exports.localLogin =     passport.use('local-login', new LocalStrategy({
+//     // by default, local strategy uses username and password, we will override with email
+//     usernameField : 'email',
+//     passwordField : 'password'
+// },
+//User.authenticate()));
 
 
 

@@ -68,10 +68,8 @@ userRouter.route('/signup')
      username : req.body.username ,
      password : req.body.password,
      email : req.body.email,
-     phone : req.body.phone,
-     country : req.body.country,
      admin : req.body.admin,
-     photo : req.body.photo 
+
     }), 
     req.body.password, (err, user) => {
       console.log("the body is : " + JSON.stringify(req.body))

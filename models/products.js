@@ -15,6 +15,33 @@ const productSchema = new Schema({
         type : String , 
         required : true
     },
+    dimensions:{
+        type : String,
+        required : true
+    },
+    using :{
+        type : String,
+        required : true
+    },
+    metalAksan :{
+        type : String,
+        required : true
+    },
+    ahsabAksan :{
+        type : String,
+        required : true
+    },
+    materials :{
+        type : String,
+        required : true
+    },
+    price :{
+        type : String,
+        required : true
+    },
+
+
+
     type:{
         type : String,
         required : true
@@ -22,7 +49,8 @@ const productSchema = new Schema({
     image:{
         type : String,
         required : true
-    }
+    },
+
 },{
     timestamps: true
 });
