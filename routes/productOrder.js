@@ -41,7 +41,7 @@ productOrderRouter.route('/')
                 });
                 let mailOptions = {
                     from: orders.email, // sender address
-                    to: "mahmoud.helal.9696@gmail.com", // list of receivers
+                    to: "haspulatmobilya@gmail.com", // list of receivers
                     subject: orders.email, // Subject line
                     text: "hello", // plain text body
                     html: '<b>'+ orders.message +'</b>' // html body
