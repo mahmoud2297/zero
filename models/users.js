@@ -6,7 +6,7 @@ var passportLocalMongoose = require('passport-local-mongoose');
 var User = new Schema({
     name : {
         type : String,
-        default : " ",
+        default : " "
     },
     username:{
         type : String,
@@ -26,6 +26,10 @@ var User = new Schema({
         type: Boolean,
         default: false
     },
+    image: {
+        type: String,
+        required: true
+    }
 
 });
 

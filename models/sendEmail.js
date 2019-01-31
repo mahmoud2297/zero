@@ -1,23 +1,28 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const productSchema = new Schema({
+
+const sendEmailSchema = new Schema({
     name: {                    
         type: String,
         required: true,
     },
-    description : {
+    email : {
+        type : String , 
+        required : true 
+    },
+    message : {
         type : String , 
         required : true
     },
-    image : {
+    subject :{
         type : String,
         required : true
-    },
+    }
 },{
     timestamps: true
 });
 
 
-var Products = mongoose.model('Products', productSchema);
+var sendEmail= mongoose.model('SendEmail', sendEmailSchema);
 
-module.exports = Products;
+module.exports = sendEmail;

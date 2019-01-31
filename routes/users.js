@@ -40,9 +40,6 @@ userRouter.route('/upload')
     res.json(req.file.path);
 })
 
-
-
-
 userRouter.use(bodyParser.json());
 /* GET users listing. */
 userRouter.route('/')
@@ -64,12 +61,13 @@ userRouter.route('/signup')
 .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
 .post(cors.corsWithOptions , (req, res, next) => {
   User.register(new User(
-    {name: req.body.name , 
-     username : req.body.username ,
-     password : req.body.password,
-     email : req.body.email,
-     admin : req.body.admin,
-
+    {
+    name: req.body.name , 
+    username : req.body.username ,
+    password : req.body.password,
+    email : req.body.email,
+    admin : req.body.admin,
+    image : req.body.image,
     }), 
     req.body.password, (err, user) => {
       console.log("the body is : " + JSON.stringify(req.body))
@@ -170,10 +168,6 @@ userRouter.route("/resetAdmin/:id")
   })
   })
   
-  
-
-
-
 userRouter.route('/login')
 .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
   .post( cors.corsWithOptions, (req, res, next) => {

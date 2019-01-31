@@ -10,6 +10,8 @@ var passport = require('passport');
 var config = require("./config")
 var authenticate = require('./authenticate');
 
+const nodemailer = require('nodemailer');
+
 const url = config.mongoUrl;
 const connect = mongoose.connect(url, {
     useMongoClient: true,
@@ -26,9 +28,10 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var contact = require('./routes/contact');
 var products = require('./routes/products');
-var users = require("./routes/users")
-var orders = require("./routes/orders")
-var productOrder = require("./routes/productOrder")
+var users = require("./routes/users");
+var orders = require("./routes/orders");
+var productOrder = require("./routes/productOrder");
+var sendEmail = require("./routes/sendEmail");
 var app = express();
 
 // view engine setup
@@ -51,12 +54,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-
 app.use('/contacts', contact);
 app.use('/orders', orders);
 app.use('/products', products);
 app.use('/productOrder', productOrder);
-app.use("/users" , users)
+app.use("/users" , users);
+app.use("/sendEmail" , sendEmail);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
